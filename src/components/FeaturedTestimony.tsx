@@ -13,7 +13,7 @@ export default function FeaturedTestimony({type,testimonies}:{type:string,testim
            setFeaturedTestimony(testimonies.filter((item,index)=>item.featured && item.type===type)[0])  
         }
        
-    },[testimonies])
+    },[testimonies,type])
     return (
         <div className={`${type==="CUSTOMER" ?"bg-[#222222]" :"bg-[#FFF8F5]"}`}>
         {featuredTestimony && <div className={`pt-[110px] w-[80%] mx-auto sm:flex  sm:justify-between py-[50px] ${type ==="CUSTOMER" ? "sm:flex-row-reverse" : ""}`}>
