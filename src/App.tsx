@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import FeaturedTestimony from "./components/FeaturedTestimony";
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import Testimonies from "./components/Testimonies";
+import { db } from "./firebase";
+import "./index.css"
 function App() {
+
+  const [testimonies,setTestimonies] = useState<any>([])
+  useEffect(()=>{
+    onSnapshot(query(collection(db, "testimonies"), orderBy("createdAt")), (snapshot) => {
+      console.log(snapshot.docs.map((doc,index)=>doc.data()))
+    setTestimonies(snapshot.docs.map((doc,index)=>doc.data()));
+    });
+},[])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header /> 
+      <Hero />
+      <FeaturedTestimony type="CUSTOMER" testimonies={testimonies}/>
+      <Testimonies start={0} stop={5} testimonies={testimonies}/>
+      <FeaturedTestimony type="VENDOR" testimonies={testimonies}/>
+      <Testimonies start={5} testimonies={testimonies}/>
     </div>
   );
 }
