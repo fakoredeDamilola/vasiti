@@ -12,29 +12,48 @@ const Modal = ({showModal,setShowModal}:{showModal:boolean,setShowModal:React.Di
         story:"",
         type:"CUSTOMER"
     })
+const uploadImage =async (img:any) => {
+const data = new FormData()
+data.append("file", img)
+data.append("upload_preset", "b8ewnvky")
+const dat = await fetch("https://api.cloudinary.com/v1_1/fakorede29/upload",{
+method:"post",
+body: data
+})
+const res = await dat.json()
+
+const im = res.url
+return im
+}
     const [successModal,setSuccessModal] = useState(false)
-      const handleChange =(value:string,name:string)=>{
-          console.log({name,value})
-          setInputState({
+      const handleChange =(value:string | File | null,name:string)=>{
+          if(value){
+             setInputState({
             ...inputState,
               [name]:value,
               
           })
+          }
+         
       }
      
       const sendTestimonies = async () =>{
+        let img=await uploadImage(inputState.image)
+       if(img!==""){
           let name = `${inputState.firstName} ${inputState.lastName}`
         await addDoc(collection(db, "testimonies"), {
             name,
             type:inputState.type,
             location:"Lagos",
-            img:"Joseph.png",
+            img,
             featured:false,
             testimony:inputState.story,
-                createdAt:serverTimestamp()
+              createdAt:serverTimestamp()
           });
           setShowModal(false)
           setSuccessModal(true)
+       }
+         
         }
   return (
     <>
@@ -60,7 +79,8 @@ const Modal = ({showModal,setShowModal}:{showModal:boolean,setShowModal:React.Di
                             <label className="block text-labelColor text-sm font-normal mb-2">
                      Upload your picture
                     </label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-1 text-black" value={inputState.image} onChange={(e)=>handleChange(e.target.value,"image")} disabled/>
+                    {/* <input className="shadow appearance-none border rounded w-full py-2 px-1 text-black" value={inputState.image} onChange={(e)=>handleChange(e.target.value,"image")} disabled/> */}
+                    <input type="file" onChange= {(e)=> handleChange(e.target.files && e.target.files[0],"image")}></input>
                       </div>
                   <div className="grid grid-cols-2 gap-4 mb-7">
                   <div>
@@ -87,18 +107,13 @@ const Modal = ({showModal,setShowModal}:{showModal:boolean,setShowModal:React.Di
                             What did you interact with Vasiti as?
                     </label>
                     <div className="flex">
-                             <div className="flex items-center mr-4 mb-4">
-    <input id="radio1" type="radio" name="radio" className="hidden" />
-    <label htmlFor="radio1" className="flex items-center cursor-pointer text-labelColor">
-     <span className="w-4 h-4 inline-block mr-1 rounded-full border border-primary"></span>
-     Customer</label>
-   </div>
-                    <div className="flex items-center mr-4 mb-4">
-    <input id="radio2" type="radio" name="radio" className="hidden" />
-    <label htmlFor="radio2" className="flex items-center cursor-pointer text-labelColor">
-     <span className="w-4 h-4 inline-block mr-1 rounded-full border border-primary"></span>
-     Vendor</label>
-   </div> 
+                    <label className="inline-flex items-center mt-3">
+                <input type="radio" className="form-radio h-5 w-5 text-blue-600" checked={inputState.type==="CUSTOMER"} onChange={()=>handleChange("CUSTOMER","type")} /><span className="ml-2 text-gray-700">CUSTOMER</span>
+            </label>
+
+            <label className="inline-flex items-center mt-3">
+                <input type="radio" className="form-radio h-5 w-5 text-indigo-600" checked={inputState.type==="VENDOR"} onChange={()=>handleChange("VENDOR","type")} /><span className="ml-2 text-gray-700">VENDOR</span>
+            </label>
                     </div>
            
                       </div>

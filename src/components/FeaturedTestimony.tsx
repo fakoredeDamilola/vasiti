@@ -9,7 +9,6 @@ export default function FeaturedTestimony({type,testimonies}:{type:string,testim
 
     useEffect(()=>{
         if(testimonies){
-            console.log(testimonies)
            setFeaturedTestimony(testimonies.filter((item,index)=>item.featured && item.type===type)[0])  
         }
        
@@ -32,7 +31,7 @@ export default function FeaturedTestimony({type,testimonies}:{type:string,testim
     </div>
     <div className={`${type ==="CUSTOMER" ? "" : "sm:ml-[100px]"}`}>
        
-        <img src={`/${featuredTestimony.img}`} alt={featuredTestimony.name}/>
+        <img src={featuredTestimony.img} alt={featuredTestimony.name}/>
     </div>
     
 </div>}

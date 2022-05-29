@@ -12,7 +12,6 @@ function App() {
   const [testimonies,setTestimonies] = useState<any>([])
   useEffect(()=>{
     onSnapshot(query(collection(db, "testimonies"), orderBy("createdAt")), (snapshot) => {
-      console.log(snapshot.docs.map((doc,index)=>doc.data()))
     setTestimonies(snapshot.docs.map((doc,index)=>doc.data()));
     });
 },[])

@@ -3,7 +3,7 @@ import { ITestimony } from "../types";
 export default function Testimony({testimony}: {testimony:ITestimony}){
     return (
         <div>
-            <img src={`/${testimony.img}`} alt={testimony.img} />
+            <img src={testimony.img} alt={testimony.img} className="rounded-[50%]" />
             <div className="my-5">
                 <h3 className="text-h3 font-semibold">{testimony.name}</h3>
             <div className="flex mt-2">
