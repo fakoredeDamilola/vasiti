@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React from "react";
 
 const SuccessModal = ({showModal,setShowModal}:{showModal:boolean,setShowModal:React.Dispatch<React.SetStateAction<boolean>>}) => {
 

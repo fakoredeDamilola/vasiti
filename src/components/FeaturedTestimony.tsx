@@ -27,12 +27,12 @@ export default function FeaturedTestimony({type,testimonies}:{type:string,testim
     <p className={`text-[16px] sm:text-lg mt-3 ${type==="CUSTOMER" ? "text-white": "text-[#242120]"}`}>{featuredTestimony.testimony}</p>
     <div className="text-center sm:text-left my-[80px] sm:mb-0">
     <p className={`text-[16px] sm:text-lg mt-3 cursor-pointer ${type ==="CUSTOMER" ? "text-white" : "text-primary"}`} onClick={()=>setShowModal(!showModal)}>SHARE YOUR OWN STORY!</p>
-    <img src="/marker.png" alt="" />
+    <img src="/marker.png" alt="text" />
     </div>
     </div>
     <div className={`${type ==="CUSTOMER" ? "" : "sm:ml-[100px]"}`}>
        
-        <img src={`/${featuredTestimony.img}`} />
+        <img src={`/${featuredTestimony.img}`} alt={featuredTestimony.name}/>
     </div>
     
 </div>}

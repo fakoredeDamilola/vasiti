@@ -9,7 +9,7 @@ export default function Hero(){
             
             </div>
             <div className="mt-4 sm:mt-0">
-                <img src="/hero_img.png" />
+                <img src="/hero_img.png" alt="hero" />
             </div>
         </div>
     )
